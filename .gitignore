@@ -1,0 +1,9 @@
+# Temporary Files
+__pycache__
+*.py[cod]
+
+# Virtual environment
+/venv
+
+# VS CODE file
+/.vscode
