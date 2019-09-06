@@ -1,7 +1,7 @@
 'use strict';
 
 var request = require('request');
-var url="http://127.0.0.1:8080/v1/log";
+var url="http://47.97.230.218:8080/v1/log";
 // json data to send
 var data= {
     "ablum_list": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
