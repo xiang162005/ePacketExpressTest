@@ -1,5 +1,6 @@
 var GoogleSpreadsheet = require('google-spreadsheet');
- 
+var async = require('async');
+
 // spreadsheet key is the long id in the sheets URL
 var doc = new GoogleSpreadsheet('1cejHzOKXBnXk8_aa_hdE66NCJt78v2b-QPm0OVOYyUU');
 var sheet;
