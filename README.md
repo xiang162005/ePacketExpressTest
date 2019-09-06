@@ -3,17 +3,18 @@
 # The Node.js test in the NodejsTest 
 
 create a virtual environment
+
     python -m venv venv
 
 install python requirements
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 install node.js requirements
     
-cd NodejsTest
+    cd NodejsTest
 
-npm init
+    npm init
 
 *********************************************************************************************************************
 I am sorry, I have not completed the entire test. I encountered a bug when connecting to Google Sheets. 
