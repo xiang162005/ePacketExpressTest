@@ -1,0 +1,21 @@
+{
+  "name": "nodejstest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "setup.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "google-spreadsheet": "^2.0.8",
+    "googleapis": "^39.2.0",
+    "request": "^2.88.0",
+    "request-json": "^0.6.4",
+    "request-promise": "^4.2.4",
+    "sync-request": "^6.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

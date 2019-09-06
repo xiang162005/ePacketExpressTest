@@ -7,3 +7,6 @@ __pycache__
 
 # VS CODE file
 /.vscode
+
+# Node environment
+/NodejsTest/node_modules
