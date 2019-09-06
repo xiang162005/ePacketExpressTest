@@ -4,7 +4,7 @@ var request = require('request');
 var url="http://47.97.230.218:8080/v1/log";
 // json data to send
 var data= {
-    "ablum_list": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    "ablum_list": [10, 20, 30]
 };
 
 request({
