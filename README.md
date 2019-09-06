@@ -1,14 +1,19 @@
-# The python test in the /PythonTest
+# The python test in the PythonTest
 
-test a and test b result: **name_count.csv**
+# The Node.js test in the NodejsTest 
 
-test c result: **origin_count.csv**
+create a virtual environment
+    python -m venv venv
 
-test a and test b code: **test_ab.py**
+install python requirements
+    pip install -r requirements.txt
 
-test c code: **test_c.py**(For dodge IP blockade, I make 10-20 seconds timeout between each search, 
-                           so it may takes 20-30 minutes to finish search)
+install node.js requirements
+    cd NodejsTest
+    npm init
 
-
-
-
+*********************************************************************************************************************
+I am sorry, I have not completed the entire test. I encountered a bug when connecting to Google Sheets. 
+I try my best, from 9 am to 5 pm, but I just can't connect to the Google sheet which you shared with me use Node.js. 
+In order to complete the test as much as possible, I give up write title and username to Google sheet, 
+and write them to /NodejsTest/result.json
