@@ -4,6 +4,7 @@
   "description": "",
   "main": "setup.js",
   "dependencies": {
+    "drive-db": "^5.0.1",
     "express": "^4.17.1",
     "google-spreadsheet": "^2.0.8",
     "googleapis": "^39.2.0",
