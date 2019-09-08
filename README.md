@@ -39,3 +39,11 @@ install node.js requirements
     cd NodejsTest
 
     npm update
+
+begin node.js test
+
+    node setup.js
+
+send a post request
+
+    node post.js
