@@ -2,7 +2,7 @@
 
 # The Node.js test in the NodejsTest
 
-**The Node.js test has deploy in alicloud: http://47.97.230.218:8080/v1/log**
+**The Node.js test has deploy in alicloud: http://149.129.96.23:8080/v1/log**
 
 You must send the POST request with json like:  {"ablum_list": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
 

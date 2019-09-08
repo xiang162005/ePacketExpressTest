@@ -1,5 +1,12 @@
 'use strict';
 
+const request = require('request');
+const url="http://149.129.96.23:8080/v1/log";
+// json data to send
+var data= {
+    "ablum_list": [11, 22, 33, 44, 55]
+};
+
 request({
     url: url,
     method: "POST",
