@@ -6,12 +6,12 @@ const { promisify } = require('util');
 const creds = require('../creds.json');
 
 
-// get the ablum_ids
+// get the ablum_ids 
 function get_ablums (ablum_list) {
     // ablum_id_list is not Null
     if (ablum_list) {
         for (let ablum_id of ablum_list) {
-            get_title_userId(ablum_id);
+            get_title_userId(ablum_id);  // async
         }
         return true;
     } else {
@@ -20,7 +20,7 @@ function get_ablums (ablum_list) {
 }
 
 
-// use ablum_id get ablum title and ablum userId
+// use ablum_id get ablum title and ablum userId 
 function get_title_userId (ablum_id) {
     var options = {
         uri: `https://jsonplaceholder.typicode.com/albums/${ablum_id}`,
@@ -28,16 +28,15 @@ function get_title_userId (ablum_id) {
             'User-Agent': 'Request-Promise'
         },
         json: true
-    }
+    };
     rp(options)
-        .then(function (repos) {
-            get_username(repos.userId, repos.title);
+        .then(function (response) {
+            get_username(response.userId, response.title); // if success
         })
-        .catch(function (err) {
-            console.log(err);
+        .catch(function (error) {
+            console.log(error); // if failed
         });
 }
-
 
 
 // use userId get ablum username
@@ -50,11 +49,11 @@ function get_username (userId, title) {
         json: true
     };
     rp(options)
-        .then(function (repos) {
-            writesheet(title, repos.username);
+        .then(function (response) {
+            writesheet(title, response.username);  //if success
         })
-        .catch(function (err) {
-            console.log(err);
+        .catch(function (error) {
+            console.log(error);  // if failed
         })
 }
 
@@ -68,6 +67,7 @@ async function writesheet (title, username) {
         const info = await promisify(doc.getInfo)();
         // get worksheet
         const sheet = info.worksheets[0];
+        // get sheet head
         var cells = await promisify(sheet.getCells)({
             'min-row': 1,
             'max-row': 1,
@@ -75,18 +75,21 @@ async function writesheet (title, username) {
             'max-col': 2,
             'return-empty': true
           });
-          // set sheet head(can't set head named title, it will get a bug)
+          // set sheet head(don't set head named title, it will get a bug)
         if (cells[0].value !== 'ablum_title' || cells[1].value !== 'username') {
             await promisify(sheet.setHeaderRow)(['ablum_title', 'username']);
         }
+        // the row you want to write to the sheet
         var row = { 
             ablum_title: title,
             username: username
         };
+        // write data to sheet
         await promisify(sheet.addRow)(row);
+        // if success print the data you write
         console.log(`write ablum_title = '${row.ablum_title}', username = '${row.username}'`);
     } catch (error) {
-        console.log(error);
+        console.log(error); // if failed, print the error
     }
   }
   

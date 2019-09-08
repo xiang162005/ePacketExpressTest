@@ -1,6 +1,6 @@
 'use strict';
 
-var request = require('request');
+const request = require('request');
 var url="http://127.0.0.1:8080/v1/log";
 // json data to send
 var data= {

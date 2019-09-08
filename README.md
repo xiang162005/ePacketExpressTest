@@ -2,22 +2,45 @@
 
 # The Node.js test in the NodejsTest 
 
-create a virtual environment
+*****************************************************************************
+
+create  and enter a  python virtual environment
+
+    cd PythonTest
 
     python -m venv venv
+
+    source  venv/bin/activate
+
 
 install python requirements
 
     pip install -r requirements.txt
 
+begin python test part a and part b
+
+    python test_ab.py
+
+begin python test part c
+
+    python test_c.py
+
+******************************************************************************
+
 install node.js requirements
-    
+
+    cd ..
+
     cd NodejsTest
 
-    npm init
+    npm update
 
-*********************************************************************************************************************
-I am sorry, I have not completed the entire test. I encountered a bug when connecting to Google Sheets. 
-I try my best, from 9 am to 5 pm, but I just can't connect to the Google sheet which you shared with me use Node.js. 
-In order to complete the test as much as possible, I give up write title and username to Google sheet, 
-and write them to /NodejsTest/result.json
+begin node.js test
+
+    node setup.js
+
+send a post request
+
+    node post.js
+
+
