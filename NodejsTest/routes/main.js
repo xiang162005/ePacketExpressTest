@@ -1,10 +1,26 @@
 'use strict';
 
-var rp = require("request-promise");
-var fs = require('fs');
+const rp = require("request-promise");
+const GoogleSpreadsheet = require('google-spreadsheet');
+const { promisify } = require('util');
+const creds = require('../creds.json');
 
 
-// use ablum id get ablum title and ablum userId
+// get the ablum_ids 
+function get_ablums (ablum_list) {
+    // ablum_id_list is not Null
+    if (ablum_list) {
+        for (let ablum_id of ablum_list) {
+            get_title_userId(ablum_id);  // async
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+// use ablum_id get ablum title and ablum userId 
 function get_title_userId (ablum_id) {
     var options = {
         uri: `https://jsonplaceholder.typicode.com/albums/${ablum_id}`,
@@ -12,16 +28,15 @@ function get_title_userId (ablum_id) {
             'User-Agent': 'Request-Promise'
         },
         json: true
-    }
+    };
     rp(options)
-        .then(function (repos) {
-            get_username(repos.userId, repos.title);
+        .then(function (response) {
+            get_username(response.userId, response.title); // if success
         })
-        .catch(function (err) {
-            console.log(err);
+        .catch(function (error) {
+            console.log(error); // if failed
         });
 }
-
 
 
 // use userId get ablum username
@@ -32,64 +47,51 @@ function get_username (userId, title) {
             'User-Agent': 'Request-Promis'
         },
         json: true
-    }
-
+    };
     rp(options)
-        .then(function (repos) {
-            write_json(title, repos.username);
+        .then(function (response) {
+            writesheet(title, response.username);  //if success
         })
-        .catch(function (err) {
-            console.log(err);
+        .catch(function (error) {
+            console.log(error);  // if failed
         })
 }
 
 
-// write ablum title and username into json
-function write_json (title, username) {
+// write title and username to google sheet
+async function writesheet (title, username) {
+    const doc = new GoogleSpreadsheet('1cejHzOKXBnXk8_aa_hdE66NCJt78v2b-QPm0OVOYyUU');
     try {
-        var result;
-        // read the json data
-        var data = fs.readFileSync('result.json', 'utf-8');
-        if (data) {
-            result = JSON.parse(data);
+        // Authentication
+        await promisify(doc.useServiceAccountAuth)(creds);
+        const info = await promisify(doc.getInfo)();
+        // get worksheet
+        const sheet = info.worksheets[0];
+        // get sheet head
+        var cells = await promisify(sheet.getCells)({
+            'min-row': 1,
+            'max-row': 1,
+            'min-col': 1,
+            'max-col': 2,
+            'return-empty': true
+          });
+          // set sheet head(don't set head named title, it will get a bug)
+        if (cells[0].value !== 'ablum_title' || cells[1].value !== 'username') {
+            await promisify(sheet.setHeaderRow)(['ablum_title', 'username']);
         }
-        else {
-            result = {
-                "ablum_list": []
-            };
-        }
-        // add title and username to data
-        // if writeable is false, the title and username will not add to json
-        var writeable = true;
-        for (let ablum of result.ablum_list) {
-            if (ablum.title === title) {
-                writeable = false;
-                break;
-            }
-        }
-        if (writeable) {
-            result.ablum_list.push({"title": title, "username": username});
-        }
-        // write to json
-        var write_data = JSON.stringify(result);
-        fs.writeFileSync('result.json', write_data);
-        console.log('write into result.json');
-        
-    } catch (err) {
-        console.log(err);
+        // the row you want to write to the sheet
+        var row = { 
+            ablum_title: title,
+            username: username
+        };
+        // write data to sheet
+        await promisify(sheet.addRow)(row);
+        // if success print the data you write
+        console.log(`write ablum_title = '${row.ablum_title}', username = '${row.username}'`);
+    } catch (error) {
+        console.log(error); // if failed, print the error
     }
-}
-
-
-
-// get the ablum_ids
-function get_ablums (ablum_list) {
-    // ablum_id_list is not Null
-    if (ablum_list) {
-        for (let ablum_id of ablum_list) {
-            get_title_userId(ablum_id);
-        }
-    } 
-}
+  }
+  
 
 module.exports = get_ablums;
